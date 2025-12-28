@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B Platform | My Blood • My Dream • My Legacy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Intro Scene */
+        #intro-scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        /* Particles */
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Sword Animation */
+        .sword {
+            position: absolute;
+            width: 200px;
+            height: 10px;
+            background: linear-gradient(90deg, #00ffff, #0080ff);
+            border-radius: 5px;
+            box-shadow: 0 0 20px #00ffff, 0 0 40px #0080ff;
+            z-index: 2;
+            opacity: 0;
+        }
+        
+        .sword-left {
+            left: -200px;
+            transform: rotate(30deg);
+            animation: swordLeft 2s forwards;
+            animation-delay: 1s;
+        }
+        
+        .sword-right {
+            right: -200px;
+            transform: rotate(-30deg);
+            animation: swordRight 2s forwards;
+            animation-delay: 1s;
+        }
+        
+        @keyframes swordLeft {
+            0% { left: -200px; opacity: 0; }
+            100% { left: 50%; transform: translateX(-120px) rotate(30deg); opacity: 1; }
+        }
+        
+        @keyframes swordRight {
+            0% { right: -200px; opacity: 0; }
+            100% { right: 50%; transform: translateX(120px) rotate(-30deg); opacity: 1; }
+        }
+        
+        /* Rock Animation */
+        .rock {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #333;
+            border-radius: 10px;
+            z-index: 3;
+            opacity: 0;
+            animation: rockAppear 0.5s forwards;
+            animation-delay: 3s;
+        }
+        
+        @keyframes rockAppear {
+            0% { opacity: 0; transform: scale(0); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .crack {
+            position: absolute;
+            width: 5px;
+            height: 100%;
+            background: #fff;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: crack 0.3s forwards;
+            animation-delay: 3.5s;
+        }
+        
+        @keyframes crack {
+            0% { height: 0; opacity: 0; }
+            100% { height: 100%; opacity: 1; }
+        }
+        
+        /* Golden Light */
+        .golden-light {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0) 70%);
+            border-radius: 50%;
+            z-index: 4;
+            opacity: 0;
+            animation: lightExplode 1s forwards;
+            animation-delay: 3.8s;
+        }
+        
+        @keyframes lightExplode {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(3); opacity: 1; }
+        }
+        
+        /* Logo */
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            z-index: 5;
+            opacity: 0;
+            animation: logoAppear 1s forwards;
+            animation-delay: 4.5s;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .logo-img {
+            width: 300px;
+            height: 300px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 40px #ffd700);
+        }
+        
+        .logo-text {
+            font-size: 40px;
+            color: #fff;
+            text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700;
+            margin-top: 20px;
+            letter-spacing: 3px;
+        }
+        
+        @keyframes logoAppear {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Intro Text */
+        .intro-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            margin-top: 30px;
+            color: #fff;
+            text-align: center;
+            z-index: 5;
+            opacity: 0;
+            animation: textAppear 1.5s forwards;
+            animation-delay: 5s;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            letter-spacing: 2px;
+        }
+        
+        @keyframes textAppear {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Main Dashboard */
+        #dashboard {
+            display: none;
+            min-height: 100vh;
+            background: #0a0a0a;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .dashboard-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #0a1629 0%, #000000 70%);
+            z-index: 0;
+        }
+        
+        .dashboard-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .dashboard-content {
+            position: relative;
+            z-index: 2;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-bottom: 100px;
+        }
+        
+        /* Header */
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-top: 20px;
+        }
+        
+        .dashboard-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-direction: column;
+        }
+        
+        .dashboard-logo-img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px #00ffff);
+        }
+        
+        .dashboard-logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 15px #00ffff;
+            margin-left: 15px;
+        }
+        
+        .dashboard-subtitle {
+            font-size: 18px;
+            color: #aaa;
+            letter-spacing: 3px;
+            margin-top: 10px;
+        }
+        
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        
+        .project-card {
+            background: rgba(20, 30, 48, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: #00ffff;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+        }
+        
+        .project-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #00ffff;
+        }
+        
+        .project-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .project-desc {
+            font-size: 16px;
+            color: #aaa;
+            line-height: 1.5;
+        }
+        
+        /* About Founder Button */
+        .founder-btn-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .founder-btn {
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-family: 'Orbitron', sans-serif;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+        
+        .founder-btn:hover {
+            background: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            transform: scale(1.05);
+        }
+        
+        /* Modal with scrolling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: rgba(10, 20, 40, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
+            position: relative;
+            animation: modalAppear 0.5s ease;
+            overflow-y: auto;
+            background-image: linear-gradient(rgba(10, 20, 40, 0.9), rgba(10, 20, 40, 0.9)), 
+                              url('https://encrypted-tbn0.gstathttps://yt3.ggpht.com/ouuNEFdGSeT0hqeO3WXrGY-RlbJM_Epr3PEXgROCr2j6e5ViFRy1R1VYkOu5vZJuWvNDnHi0mbkbng=s780-c-fcrop64=1,00003200ffffcdff-rw-nd-v1"ic.com/images?q=tbn:ANd9GcS7-u1sVvwEq8keC-gvLl3gYlFPHX2D6lO9KA&s');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+        
+        /* Founder background image fallback */
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7-u1sVvwEq8keC-gvhttps://yt3.ggpht.com/ouuNEFdGSeT0hqeO3WXrGY-RlbJM_Epr3PEXgROCr2j6e5ViFRy1R1VYkOu5vZJuWvNDnHi0mbkbng=s780-c-fcrop64=1,00003200ffffcdff-rw-nd-v1"Ll3gYlFPHX2D6lO9KA&s');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 20px;
+        }
+        
+        @keyframes modalAppear {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 30px;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-modal:hover {
+            color: #fff;
+            background: rgba(0, 0, 0, 0.8);
+        }
+        
+        .modal h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            color: #ffd700;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .modal h3 {
+            font-size: 24px;
+            color: #00ffff;
+            margin: 30px 0 15px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            padding-bottom: 8px;
+        }
+        
+        .modal h4, .modal h5, .modal h6 {
+            font-size: 20px;
+            color: #ffd700;
+            margin: 25px 0 12px;
+        }
+        
+        .modal p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .modal-quote {
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+            border-left: 3px solid #ffd700;
+            border-right: 3px solid #ffd700;
+            margin: 25px 0;
+            font-size: 22px;
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 10px;
+        }
+        
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            margin-top: 50px;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        
+        .copyright {
+            font-size: 16px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        
+        .made-with-love {
+            font-size: 18px;
+            color: #ff4081;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .heart {
+            color: #ff4081;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.3); }
+            10% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            20% { transform: scale(1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-img {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .logo-text {
+                font-size: 30px;
+            }
+            
+            .intro-text {
+                font-size: 18px;
+            }
+            
+            .dashboard-logo-img {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .dashboard-logo-text {
+                font-size: 36px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .project-card {
+                padding: 20px;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+                max-height: 80vh;
+            }
+            
+            .modal h2 {
+                font-size: 28px;
+            }
+            
+            .modal h3 {
+                font-size: 22px;
+            }
+            
+            .modal p {
+                font-size: 16px;
+            }
+            
+            .modal-quote {
+                font-size: 18px;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-img {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .logo-text {
+                font-size: 24px;
+            }
+            
+            .intro-text {
+                font-size: 16px;
+            }
+            
+            .sword {
+                width: 150px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-logo-img {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .dashboard-logo-text {
+                font-size: 28px;
+            }
+            
+            .modal-content {
+                padding: 25px 15px;
+            }
+        }
+        
+        /* Sound Toggle */
+        .sound-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        
+        .sound-toggle:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+        
+        /* Audio elements (hidden) */
+        .audio-element {
+            display: none;
+        }
+        
+        /* Custom scrollbar for modal */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #00ffff, #0080ff);
+            border-radius: 10px;
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #00ffff, #00aaff);
+        }
+        
+        /* Loading fallback for images */
+        .logo-img, .dashboard-logo-img {
+            background: linear-gradient(45deg, #000, #111);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden audio elements with better quality sounds -->
+    <audio id="swordSound" class="audio-element">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-sword-strike-2765.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="swordClashSound" class="audio-element">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-metal-sword-clash-2961.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="rockBreakSound" class="audio-element">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-breaking-ice-glass-2890.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="rockBlastSound" class="audio-element">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-explosion-with-debris-1993.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="introMusic" class="audio-element" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-epic-cinematic-trailer-2495.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="hoverSound" class="audio-element">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Intro Scene -->
+    <div id="intro-scene">
+        <div id="particles"></div>
+        <div class="sword sword-left"></div>
+        <div class="sword sword-right"></div>
+        <div class="rock">
+            <div class="crack"></div>
+        </div>
+        <div class="golden-light"></div>
+        <div class="logo">
+            <img src="https://yt3.ggpht.com/ouuNEFdGSeT0hqeO3WXrGY-RlbJM_Epr3PEXgROCr2j6e5ViFRy1R1VYkOu5vZJuWvNDnHi0mbkbng=s780-c-fcrop64=1,00003200ffffcdff-rw-nd-v1" alt="B Logo" class="logo-img">
+            <div class="logo-text">B</div>
+        </div>
+        <div class="intro-text">My Blood • My Dream • My Legacy</div>
+    </div>
+    
+    <!-- Main Dashboard -->
+    <div id="dashboard">
+        <div class="dashboard-bg"></div>
+        <div class="dashboard-particles" id="dashboard-particles"></div>
+        
+        <div class="dashboard-content">
+            <header class="dashboard-header">
+                <div class="dashboard-logo-container">
+                    <img src="https://yt3.ggpht.com/ouuNEFdGSeT0hqeO3WXrGY-RlbJM_Epr3PEXgROCr2j6e5ViFRy1R1VYkOu5vZJuWvNDnHi0mbkbng=s780-c-fcrop64=1,00003200ffffcdff-rw-nd-v1" alt="B Logo" class="dashboard-logo-img">
+                    <div class="dashboard-logo-text">B</div>
+                </div>
+                <div class="dashboard-subtitle">MY BLOOD • MY DREAM • MY LEGACY</div>
+            </header>
+            
+            <main>
+                <div class="projects-grid">
+                    <!-- Project Cards -->
+                    <div class="project-card" onclick="openProject('B-Decide AI')">
+                        <div class="project-icon">🧠</div>
+                        <div class="project-title">B-Decide AI</div>
+                        <div class="project-desc">Advanced decision-making AI that analyzes complex scenarios and provides optimal solutions.</div>
+                    </div>
+                    
+                    <div class="project-card" onclick="openProject('B-Analyzer')">
+                        <div class="project-icon">📊</div>
+                        <div class="project-title">B-Analyzer</div>
+                        <div class="project-desc">Comprehensive data analysis tool with real-time visualization and predictive insights.</div>
+                    </div>
+                    
+                    <div class="project-card" onclick="openProject('B-Predictor')">
+                        <div class="project-icon">🔮</div>
+                        <div class="project-title">B-Predictor</div>
+                        <div class="project-desc">Machine learning models for accurate forecasting across various domains and industries.</div>
+                    </div>
+                    
+                    <div class="project-card" onclick="openProject('B-Monitor')">
+                        <div class="project-icon">🛡️</div>
+                        <div class="project-title">B-Monitor</div>
+                        <div class="project-desc">Real-time security and performance monitoring system with AI-powered threat detection.</div>
+                    </div>
+                    
+                    <div class="project-card" onclick="openProject('Food Freshness Detector')">
+                        <div class="project-icon">🍎</div>
+                        <div class="project-title">Food Freshness Detector</div>
+                        <div class="project-desc">AI-powered system to detect food freshness using image recognition and sensor data.</div>
+                    </div>
+
+                    <div class="project-card" onclick="openProject('B-Hisab')">
+                        <div class="project-icon">💰</div>
+                        <div class="project-title">B-Hisab</div>
+                        <div class="project-desc">Is a simple, private, browser-based expense tracker. All your data is stored locally in your browser using localStorage.</div>
+                    </div>
+                    
+                    <div class="project-card" onclick="openProject('More Projects')">
+                        <div class="project-icon">⚙️</div>
+                        <div class="project-title">More Projects</div>
+                        <div class="project-desc">Future innovations currently in development. Stay tuned for groundbreaking releases.</div>
+                    </div>
+                </div>
+                
+                <div class="founder-btn-container">
+                    <button class="founder-btn" onclick="openModal()">
+                        <i class="fas fa-user-crown"></i> About the Founder
+                    </button>
+                </div>
+            </main>
+            
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="copyright">
+                    &copy; 2025 B. All rights reserved.
+                </div>
+                <div class="made-with-love">
+                    Made with <span class="heart">❤️</span> by B
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Founder Modal -->
+    <div id="founder-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2>About the Founder</h2>
+            
+            <h3>Name: Mr. Bongu Rishi — Creator of B 
+                My Blood. My Dream. My Legacy.</h3>
+            
+            <p>I am Bongu Rishi — not just a developer, but a creator of worlds, a builder of visions, and a relentless seeker of impact.</p>
+            
+            <p>I didn't inherit success. I earned every milestone through struggle, sleepless nights, and unwavering belief. This platform wasn't born from privilege or comfort — it was forged in silence, through relentless effort, quiet sacrifices, and an unshakable drive to create something that lasts beyond a lifetime.</p>
+            
+            <h4>My Vision</h4>
+            <p>To craft a future where technology empowers humanity, not merely automates it. Where innovation is purposeful, bold, and transformative. Where ideas are not just born — they are engineered into systems that leave an indelible mark on the world.</p>
+            
+            <div class="modal-quote">"Dreams are the first step, but execution makes them immortal."</div>
+            
+            <h5>My Mission</h5>
+            <p>To develop intelligent platforms that solve real problems, inspire growth, and redefine what's possible.</p>
+            <p>Every project under B carries intention. Every line of code embodies discipline. Every system reflects the relentless pursuit of excellence.</p>
+            
+            <div class="modal-quote">"Impact is earned, not given."</div>
+            
+            <h6>My Philosophy</h6>
+            <p><strong>My Blood</strong> — the sacrifices that no one saw, the nights no one noticed, the grit behind every achievement.</p>
+            <p><strong>My Dream</strong> — the vision I refuse to compromise, the horizon I relentlessly chase.</p>
+            <p><strong>My Legacy</strong> — the lasting mark that remains long after the work is done.</p>
+            <p>This is not just a platform. It is a reflection of who I am, a testament to what unyielding focus can achieve.</p>
+            
+            <div class="modal-quote">"What you build today, inspires tomorrow."</div>
+            
+            <h4>The Path I Walk</h4>
+            <p>I don't follow trends. I don't wait for permission. I create what others fear to imagine.</p>
+            <p>Greatness is not accidental. It is engineered through courage, clarity, and consistency.</p>
+            
+            <div class="modal-quote">"Courage is the currency of creation."</div>
+            
+            <h4>B — More Than a Brand</h4>
+            <p>B is not a name. It is a mindset, a movement, and a declaration that limits are temporary, but legacy is eternal.</p>
+            <p>This is my name. This is my story. This is my work. This is my legacy.</p>
+            
+            <div class="modal-quote">"Limits exist only to be broken."</div>
+            
+            <h4>The Creator</h4>
+            <p>— Bongu Rishi<br>Founder | Dreamer | Legacy Creator</p>
+            
+        </div>
+    </div>
+    
+    <!-- Sound Toggle -->
+    <div class="sound-toggle" onclick="toggleSound()">
+        <i class="fas fa-volume-up" id="sound-icon"></i>
+    </div>
+
+    <script>
+        // Audio elements
+        let swordSound, swordClashSound, rockBreakSound, rockBlastSound, introMusic, hoverSound;
+        let soundEnabled = true;
+        
+        // Create particles for intro
+        function createParticles(containerId, count) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 3 + 1;
+                
+                // Random animation delay and duration
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                
+                particle.style.left = `${x}%`;
+                particle.style.top = `${y}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animation = `float ${duration}s linear ${delay}s infinite`;
+                
+                // Add custom float animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes float {
+                        0% { transform: translate(0, 0); opacity: 0; }
+                        10% { opacity: 1; }
+                        90% { opacity: 1; }
+                        100% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Play sword swing sound
+        function playSwordSound() {
+            if (!soundEnabled) return;
+            
+            try {
+                swordSound.currentTime = 0;
+                swordSound.volume = 0.6;
+                swordSound.play().catch(e => console.log("Audio play blocked:", e));
+            } catch (e) {
+                console.log("Sword sound error:", e);
+            }
+        }
+        
+        // Play sword clash sound
+        function playSwordClashSound() {
+            if (!soundEnabled) return;
+            
+            try {
+                swordClashSound.currentTime = 0;
+                swordClashSound.volume = 0.7;
+                swordClashSound.play().catch(e => console.log("Audio play blocked:", e));
+            } catch (e) {
+                console.log("Sword clash sound error:", e);
+            }
+        }
+        
+        // Play rock break sound
+        function playRockBreakSound() {
+            if (!soundEnabled) return;
+            
+            try {
+                rockBreakSound.currentTime = 0;
+                rockBreakSound.volume = 0.5;
+                rockBreakSound.play().catch(e => console.log("Audio play blocked:", e));
+            } catch (e) {
+                console.log("Rock break sound error:", e);
+            }
+        }
+        
+        // Play rock blast sound
+        function playRockBlastSound() {
+            if (!soundEnabled) return;
+            
+            try {
+                rockBlastSound.currentTime = 0;
+                rockBlastSound.volume = 0.4;
+                rockBlastSound.play().catch(e => console.log("Audio play blocked:", e));
+            } catch (e) {
+                console.log("Rock blast sound error:", e);
+            }
+        }
+        
+        // Play background music
+        function playBackgroundMusic() {
+            if (!soundEnabled) return;
+            
+            try {
+                introMusic.currentTime = 0;
+                introMusic.volume = 0.2;
+                introMusic.loop = true;
+                introMusic.play().catch(e => console.log("Background music blocked:", e));
+            } catch (e) {
+                console.log("Background music error:", e);
+            }
+        }
+        
+        // Play hover sound
+        function playHoverSound() {
+            if (!soundEnabled) return;
+            
+            try {
+                hoverSound.currentTime = 0;
+                hoverSound.volume = 0.3;
+                hoverSound.play().catch(e => console.log("Hover sound blocked:", e));
+            } catch (e) {
+                console.log("Hover sound error:", e);
+            }
+        }
+        
+        // Stop all sounds
+        function stopAllSounds() {
+            swordSound.pause();
+            swordClashSound.pause();
+            rockBreakSound.pause();
+            rockBlastSound.pause();
+            introMusic.pause();
+            hoverSound.pause();
+        }
+        
+        // Toggle sound on/off
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            
+            if (soundEnabled) {
+                icon.classList.remove('fa-volume-mute');
+                icon.classList.add('fa-volume-up');
+                playBackgroundMusic();
+            } else {
+                icon.classList.remove('fa-volume-up');
+                icon.classList.add('fa-volume-mute');
+                stopAllSounds();
+            }
+        }
+        
+        // Open project
+        function openProject(projectName) {
+            playHoverSound();
+            const links = {
+                "B-Decide AI": "https://b-decide-ai.streamlit.app/",
+                "B-Analyzer": "https://b-analyzer.streamlit.app/",
+                "B-Predictor": "https://b-predictor.streamlit.app/",
+                "Food Freshness Detector": "https://food-freshness-detector-ffd.streamlit.app/",
+                "B-Hisab": "https://bongurishi.github.io/B-Hisab/",
+                "B-Monitor": "#",
+                "More Projects": "#"
+            };
+
+            const url = links[projectName];
+            if (url && url !== "#") {
+                window.open(url, "_blank");
+            } else {
+                alert("Project coming soon 🚀");
+            }
+        }
+        
+        // Open modal
+        function openModal() {
+            playHoverSound();
+            document.getElementById('founder-modal').style.display = 'flex';
+            // Scroll to top of modal when opened
+            document.querySelector('.modal-content').scrollTop = 0;
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('founder-modal').style.display = 'none';
+        }
+        
+        // Initialize everything when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            // Get audio elements
+            swordSound = document.getElementById('swordSound');
+            swordClashSound = document.getElementById('swordClashSound');
+            rockBreakSound = document.getElementById('rockBreakSound');
+            rockBlastSound = document.getElementById('rockBlastSound');
+            introMusic = document.getElementById('introMusic');
+            hoverSound = document.getElementById('hoverSound');
+            
+            // Create particles for intro and dashboard
+            createParticles('particles', 100);
+            createParticles('dashboard-particles', 150);
+            
+            // Play sword swing sound after a delay
+            setTimeout(playSwordSound, 1500);
+            
+            // Play sword clash sound when swords meet
+            setTimeout(playSwordClashSound, 2800);
+            
+            // Play rock break sound
+            setTimeout(playRockBreakSound, 3500);
+            
+            // Play rock blast sound
+            setTimeout(playRockBlastSound, 3800);
+            
+            // Play background music after intro
+            setTimeout(playBackgroundMusic, 7000);
+            
+            // Add hover effects to project cards
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    playHoverSound();
+                });
+            });
+            
+            // Add hover sound to founder button
+            document.querySelector('.founder-btn').addEventListener('mouseenter', () => {
+                playHoverSound();
+            });
+            
+            // Add preloading for images with fallback
+            const logoImg = document.querySelector('.logo-img');
+            const dashboardLogoImg = document.querySelector('.dashboard-logo-img');
+            
+            logoImg.onerror = function() {
+                this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><rect width="300" height="300" fill="black"/><text x="50%" y="50%" font-family="Orbitron" font-size="120" font-weight="900" fill="%23ffd700" text-anchor="middle" dy=".3em" filter="url(%23glow)">B</text><defs><filter id="glow"><feGaussianBlur stdDeviation="5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>';
+            };
+            
+            dashboardLogoImg.onerror = function() {
+                this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" fill="black"/><text x="50%" y="50%" font-family="Orbitron" font-size="60" font-weight="900" fill="%2300ffff" text-anchor="middle" dy=".3em" filter="url(%23glow)">B</text><defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>';
+            };
+            
+            // Transition from intro to dashboard after 7 seconds
+            setTimeout(() => {
+                document.getElementById('intro-scene').style.opacity = '0';
+                document.getElementById('intro-scene').style.transition = 'opacity 1s ease';
+                
+                setTimeout(() => {
+                    document.getElementById('intro-scene').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                }, 1000);
+            }, 7000);
+        });
+        
+        // Close modal if clicked outside
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('founder-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Add keyboard support for closing modal with ESC key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
