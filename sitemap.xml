@@ -3,6 +3,9 @@
 
   <url>
     <loc>https://bongurishi.github.io/B-Platform/</loc>
+    <lastmod>2025-12-28</lastmod>  <!-- Add date of last modification -->
+    <changefreq>monthly</changefreq>  <!-- How often page changes -->
+    <priority>1.0</priority>  <!-- Priority relative to other pages -->
   </url>
 
 </urlset>
